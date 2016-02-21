@@ -15,6 +15,6 @@ class Question(models.Model):
 @python_2_unicode_compatible
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
+    answer_text = models.CharField(max_length=200)
     def __str__(self):
-        return self.choice_text
+        return self.answer_text
