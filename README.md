@@ -6,7 +6,7 @@ Welcome to Django, a Python Web framework originally designed so that web profes
 
 Before getting started with Django, you'll probably need to do the following.
 
-##### 1. brew install python/brew update python
+##### 1. brew install python (OR brew update python)
 
 Ensures that you have the latest version of Python on your computer (because Django is a Python Web framework). Upon **install** or **update**, you should have version 2.7.11.
 
