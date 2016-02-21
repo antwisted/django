@@ -16,5 +16,6 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
     def __str__(self):
         return self.answer_text
