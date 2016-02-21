@@ -1,5 +1,7 @@
 # Django Unchained
 
+![alt text](https://github.com/marinar578/django/blob/mahrtian/django.gif)
+
 Welcome to Django, a Python Web framework originally designed so that web professionals - namely those working in e-newsrooms - could "take applications from concept to completion" in as little time as possible and focus more on creating great content.
 
 ### Installfest
