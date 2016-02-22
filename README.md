@@ -52,6 +52,6 @@ Database migrations in Django are very similar in their setup and execution to d
 
   * **python manage.py migrate:** Creates any necessary database tables according to the database settings in the project's **settings.py** file (which is automatically created when the Django project is). It also executes any changes made later on to that database. Changes that are implemented through...
 
-  * **python manage.py makemigrations <name_of_app>:** This creates new migrations based on the changes detected to your **models.py** file.
+  * **python manage.py makemigrations <name of app>:** This creates new migrations based on the changes detected to your **models.py** file.
 
-  * **python manage.py sqlmigrate <name_of_app> <migration_number>**: This allows the user to view the complete SQL commands created by the aforementioned migrations.
+  * **python manage.py sqlmigrate <name of app> <migration number>:** This allows the user to view the complete SQL commands created by the aforementioned migrations.
