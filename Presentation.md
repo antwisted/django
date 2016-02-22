@@ -5,15 +5,20 @@ Commands
 =======================================
 
 Test Django installation: (from python shell)
+```
 >>> import django
 >>> django.VERSION
+```
 
 New Django project:
+```
 django-admin startproject mysite
+```
 
 Launch Django server:
+```
 python manage.py runserver [port_number] / [0.0.0.0:port_number]
-
+```
 
 =======================================
 History
