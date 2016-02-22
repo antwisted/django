@@ -163,16 +163,37 @@ def hello(request):
 Each view function takes at least one parameter, called request by convention. This is an object that contains information about the current Web request that has triggered this view, and it’s an instance of the class django.http.HttpRequest.
 
 ## Defining The Routes
-### urls.py
-To bind a view function to a particular URL with Django, we use a URLconf.
+### URL configuration
+
+To bind a view function to a particular URL with Django, we use a URLconf in url.py files.
+
+First we need to config the URL for the project: 
 
 ```
-from django.conf.urls.defaults import patterns, url
-from test_app.views import hello
+from django.conf.urls import include, url
+from django.contrib import admin
 
-urlpatterns = patterns('',
-    url(r'^hello/$', hello),
-)
+urlpatterns = [
+    url(r'^feedback/', include('feedback.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'', include('feedback.urls')),
+]
+```
+
+For each specific app, we also need to config URL:
+
+```
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'feedback'
+urlpatterns = [
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
+    url(r'^(?P<question_id>[0-9]+)/answer/$', views.answer, name='answer'),
+]
 ```
 The variable urlpatterns, is a default variable that Django expects to find in a URLconf module. It calls the function patterns and saves the result into a variable that defines the mapping between URLs and the code that handles those URLs. 
 
@@ -183,6 +204,10 @@ The second argument line is referred to as a URLpattern. The url() function tell
 The 'r' character in front of the regular expression string tells Python that the string is a “raw string” – its contents should not interpret backslashes. In normal Python strings, backslashes are used for escaping special characters – such as in the string '\n', which is a one-character string containing a newline. When you add the r to make it a raw string, Python does not apply its backslash escaping – so, r'\n' is a two-character string containing a literal backslash and a lowercase “n”. There’s a natural collision between Python’s usage of backslashes and the backslashes that are found in regular expressions, so it’s strongly suggested that raw strings are used any time one is defining a regular expression in Python.
 
 Finally, the pattern includes a caret (^) and a dollar sign ($). These are regular expression characters that have a special meaning: the caret means “require that the pattern matches the start of the string,” and the dollar sign means “require that the pattern matches the end of the string.” Had this not been included Django would match ANY URL that starts or ends with hello, such as `/hello/foo` or '/foo/bar/hello'. Thus, we use both the caret and dollar sign to ensure that only the URL /hello/ matches – nothing more, nothing less.
+
+### Django URLconf vs Rails URLconf
+In Rails, URLconf is in the routes.rb file under config folder. Rails makes building REST web services a breeze and routes are expressed in terms of HTTP verbs.
+Django does not use the HTTP verb to route. Instead it is more verbose and uses regular expressions to match URLs to controllers. Django doesn’t have any convention when naming controller actions, so Django does not have any cool helpers like Rails’ resource and every route has to be explicitly defined. This results in each controller requiring several routing rules.
 
 
 ## Models && The Database
