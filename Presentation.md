@@ -36,9 +36,18 @@ The second matter to note is how Django’s origins have shaped the culture of i
 
 - Courtesy of [The Django Book](http://www.djangobook.com)
 
+=======================================
+MVC Pattern Overview
+=======================================
+
+Model-View-Template in Django is an alternative to Model-View-Controller in RoR. Django view performs a role of a MVC controller as well as template of a Django is a MVC view.
+
+![alt text](https://github.com/marinar578/django/blob/mahrtian/django.gif)
+
+![alt text](https://github.com/marinar578/django/blob/mahrtian/django.gif)
 
 =======================================
-Intial Directory Structure && MVC Pattern
+Intial Directory Structure
 =======================================
 ```
 File directory:
