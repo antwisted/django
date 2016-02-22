@@ -34,7 +34,7 @@ This history is relevant because it helps explain two key things. The first is D
 
 The second matter to note is how Django’s origins have shaped the culture of its open source community. Because Django was extracted from real-world code, rather than being an academic exercise or commercial product, it is acutely focused on solving Web development problems that Django’s developers themselves have faced – and continue to face. As a result, Django itself is actively improved on an almost daily basis. The framework’s maintainers have a vested interest in making sure Django saves developers time, produces applications that are easy to maintain and performs well under load. If nothing else, the developers are motivated by their own selfish desires to save themselves time and enjoy their jobs.
 
-- djangobook.com
+- Courtesy of [The Django Book](http://www.djangobook.com)
 
 
 =======================================
@@ -51,10 +51,10 @@ django/
         wsgi.py
 ```
 
-django/:
+##### django/:
 The outer mysite/ directory is just a container for this project. Its name doesn’t matter to Django; you can rename it to anything you like.
 
-manage.py:
+##### manage.py:
 A command-line utility that lets you interact with this Django project in various ways. You should never have to edit this file; it’s created in this directory purely for convenience.
 
 This file also manages your Python path; the list of directories on your system where Python looks when you use the Python import statement.
@@ -72,19 +72,19 @@ To see your current path, type the following into your Python shell:
 >>> print sys.path
 ```
 
-django/test_app/:
+##### django/test_app/:
 The inner directory test_app/ is the actual Python package for this project. Its name is the Python package name we'll need to use to import anything inside it (e.g. import test_app.settings).
 
-__init__.py:
+##### __init__.py:
 A file required for Python to treat the test_app directory as a package (i.e., a group of Python modules). It’s an empty file, and generally you won’t add anything to it.
 
-settings.py:
+##### settings.py:
 Settings/configuration for this Django project. Like an extended Gemfile or Gemfile.lock, it contains types of settings available, along with their default values.
 
-urls.py:
+##### urls.py:
 The URLs for this Django project. Think of this as the “table of contents”.
 
-wsgi.py:
+##### wsgi.py:
 An entry-point for WSGI-compatible webservers to serve this project.
 
 ## Typical Division of Django MVC
