@@ -1,12 +1,12 @@
 li {
     list-style: none;
-    font-weight: bold;
+    padding-bottom: 10px;
 }
 
 li a{
-    color: green;
+    color: black;
+    text-decoration: none;
 }
-
 
 body::after {
   content: "";
@@ -18,4 +18,31 @@ body::after {
   right: 0;
   position: absolute;
   z-index: -1;   
+}
+
+input[type=submit] {
+  border: 1px solid #bbb;
+  margin: 20px 20px 0 20px;
+  background: #DE5A51;
+  padding: 6px 20px;
+  cursor: pointer;
+}
+
+.container {
+  /*border: 1px solid black;*/
+  width: 70%;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.question {
+  /*border: 1px solid black;*/
+  padding: 20px 20px 0 0;
+}
+
+h3{
+  margin-top: 50px;
+  margin-left: 42px;
 }

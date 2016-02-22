@@ -49,6 +49,7 @@ Model-View-Template in Django is an alternative to Model-View-Controller in RoR.
 =======================================
 Intial Directory Structure
 =======================================
+
 ```
 File directory:
 django/
