@@ -273,7 +273,50 @@ Django does not use the HTTP verb to route. Instead it is more verbose and uses 
 
 
 ## Models && The Database
+### settings.py
+This is a normal Python module with module-level variables representing Django settings. By default, the configuration uses SQLite.
 
+##### ENGINE
+```
+DATABASE = {
+    'default': {
+        # For sqLite
+        'ENGINE': 'django.db.backends.sqlite3'
+        
+        # For PostgreSQL
+        'ENGINE': 'django.db.backends.postgresql'
+        
+        # For MySQL
+        'ENGINE': 'django.db.backends.mysql'
+        
+        # For Oracle
+        'ENGINE': 'django.db.backends.oracle'
+```
+If you wish to use another database, install the appropriate database bindings and change the following keys in the DATABASES 'default' item to match your database connection settings. If you are not using SQLite as your database, additional settings such as USER, PASSWORD, and HOST must be added. For more details, see the reference documentation for DATABASES.
+
+##### NAME
+The name of your database. If you’re using SQLite, the database will be a file on your computer; in that case, NAME should be the full absolute path, including filename, of that file. The default value, os.path.join(BASE_DIR, 'db.sqlite3'), will store the file in your project directory.
+
+##### MIGRATIONS
+The INSTALLED_APPS hold the names of all Django applications that are activated in this Django instance. Apps can be used in multiple projects, and you can package and distribute them for use by others in their projects. Some of these applications make use of at least one database table, though, so we need to create the tables in the database before we can use them. To do that, run the following command:
+
+```
+python manage.py migrate
+```
+
+### models.py
+```
+from django.db import models
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+```
 
 =======================================
 Debugging The Web App
