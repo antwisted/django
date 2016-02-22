@@ -1,27 +1,28 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views import generic
 
-from .models import Question, Answer
+from .models import Answer, Question
 
-def index(request):
-    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    # template = loader.get_template('feedback/index.html')
-    # context = {
-    #     'latest_question_list': latest_question_list,
-    # }
-    # return HttpResponse(template.render(context, request))
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'feedback/index.html', context)
 
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'feedback/detail.html', {'question': question})
+class IndexView(generic.ListView):
+    template_name = 'feedback/index.html'
+    context_object_name = 'latest_question_list'
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'feedback/results.html', {'question': question})
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'feedback/detail.html'
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'feedback/results.html'
 
 def answer(request, question_id):
     question = get_object_or_404(Question, pk=question_id)

@@ -4,12 +4,8 @@ from . import views
 
 app_name = 'feedback'
 urlpatterns = [
-    # ex: /feedback/
-    url(r'^$', views.index, name='index'),
-    # ex: /feedback/5/
-    url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
-    # ex: /feedback/5/results/
-    url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
-    # ex: /feedback/5/answer/
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
     url(r'^(?P<question_id>[0-9]+)/answer/$', views.answer, name='answer'),
 ]
