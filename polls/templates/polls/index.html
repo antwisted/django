@@ -1,13 +1,35 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>The Django Project</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+</head>
+<body>
+<body>
+  <header>
+    <img src="../../static/polls/images/check_okay.png">
+    <h1>WDI Survey</h1>
+    <ul>
+      <li><a href="/">Root</a></li>
+      <li><a href="/polls">Polls</a></li>
+      <li><a href="/admin">Admin</a></li>
+    </ul>
+  </header>
+<article>
 {% if latest_question_list %}
 	<ul>
 	{% for question in latest_question_list %}
 		<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
 	{% endfor %}		
-	</ul>
+	</ul><br />
+	<img src="../../static/polls/images/background.gif" />
 {% else %}
 	<p>No polls are available.</p>
-{% endif %}		
+{% endif %}	
+</article>
+</body>
+</html>
