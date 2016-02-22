@@ -42,9 +42,9 @@ MVC Pattern Overview
 
 Model-View-Template in Django is an alternative to Model-View-Controller in RoR. Django view performs a role of a MVC controller as well as template of a Django is a MVC view.
 
-![alt text](https://github.com/marinar578/django/blob/mahrtian/django.gif)
+![alt text](https://github.com/marinar578/django/blob/ulyssesyang/django_vs_rails.png)
 
-![alt text](https://github.com/marinar578/django/blob/mahrtian/django.gif)
+![alt text](https://github.com/marinar578/django/blob/ulyssesyang/django_mtv.png)
 
 =======================================
 Intial Directory Structure
