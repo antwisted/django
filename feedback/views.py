@@ -1,8 +1,8 @@
-from django.http import HttpResponse
-from django.template import loader
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 
-from .models import Question
+from .models import Question, Answer
 
 def index(request):
     # latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -20,18 +20,18 @@ def detail(request, question_id):
     return render(request, 'feedback/detail.html', {'question': question})
 
 def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'feedback/results.html', {'question': question})
 
 def answer(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_answer = question.answer_set.get(pk=request.POST['answer'])
-    except (KeyError, answer.DoesNotExist):
+    except (KeyError, Answer.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'feedback/detail.html', {
             'question': question,
-            'error_message': "You didn't select a answer.",
+            'error_message': "You didn't select an answer.",
         })
     else:
         selected_answer.votes += 1
