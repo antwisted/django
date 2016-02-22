@@ -11,7 +11,7 @@ li a{
 body::after {
   content: "";
   background: url(images/background.gif) no-repeat right bottom;
-  opacity: 0.5;
+  opacity: 0.3;
   top: 0;
   left: 0;
   bottom: 0;
