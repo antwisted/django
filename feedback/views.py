@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.shortcuts import redirect
 
 from .models import Answer, Question
 
@@ -41,3 +42,4 @@ def answer(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('feedback:results', args=(question.id,)))
+        

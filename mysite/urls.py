@@ -20,4 +20,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^feedback/', include('feedback.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'', include('feedback.urls')),
 ]

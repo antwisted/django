@@ -1,7 +1,21 @@
-li a {
+li {
+    list-style: none;
+    font-weight: bold;
+}
+
+li a{
     color: green;
 }
 
-body {
-    background: white url("images/background.gif") no-repeat right bottom;
+
+body::after {
+  content: "";
+  background: url(images/background.gif) no-repeat right bottom;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
 }
