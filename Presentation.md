@@ -101,44 +101,106 @@ An entry-point for WSGI-compatible webservers to serve this project.
 ```python
 # models.py (the database tables)
 
+from __future__ import unicode_literals
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
-class Book(models.Model):
-    name = models.CharField(max_length=50)
-    pub_date = models.DateField()
+@python_2_unicode_compatible
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    def __str__(self):
+        return self.question_text
 
+@python_2_unicode_compatible
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    def __str__(self):
+        return self.answer_text
 
 # views.py (the business logic) - MODEL
 
-from django.shortcuts import render
-from models import Book
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.views import generic
+from django.shortcuts import redirect
 
-def latest_books(request):
-    book_list = Book.objects.order_by('-pub_date')[:10]
-    return render(request, 'latest_books.html', {'book_list': book_list})
+from .models import Answer, Question
 
+class IndexView(generic.ListView):
+    template_name = 'feedback/index.html'
+    context_object_name = 'latest_question_list'
+    def get_queryset(self):
+        return Question.objects.order_by('-pub_date')[:5]
 
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'feedback/detail.html'
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'feedback/results.html'
+
+def answer(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_answer = question.answer_set.get(pk=request.POST['answer'])
+    except (KeyError, Answer.DoesNotExist):
+        return render(request, 'feedback/detail.html', {
+            'question': question,
+            'error_message': "You didn't select an answer.",
+        })
+    else:
+        selected_answer.votes += 1
+        selected_answer.save()
+        return HttpResponseRedirect(reverse('feedback:results', args=(question.id,)))
+        
 # urls.py (the URL configuration) - CONTROLLER
 
-from django.conf.urls.defaults import *
-import views
+from django.conf.urls import url
 
-urlpatterns = patterns('',
-    (r'^latest/$', views.latest_books),
-)
+from . import views
 
+app_name = 'feedback'
+urlpatterns = [
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
+    url(r'^(?P<question_id>[0-9]+)/answer/$', views.answer, name='answer'),
+]
 
 # latest_books.html (the template) - VIEW
 
-<html><head><title>Books</title></head>
-<body>
-<h1>Books</h1>
-<ul>
-{% for book in book_list %}
-<li>{{ book.name }}</li>
-{% endfor %}
-</ul>
-</body></html>
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'feedback/style.css' %}" />
+
+<div class="container">
+    <h3>Django Feedback</h3>
+
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <div class="question">
+            <li><a href="{% url 'feedback:detail' question.id %}">{{ question.question_text }}</a></li>
+            <form action="{% url 'feedback:answer' question.id %}" method="post">
+            {% csrf_token %}
+            {% for answer in question.answer_set.all %}
+                <input type="radio" name="answer" id="answer{{ forloop.counter }}" value="{{ answer.id }}" />
+                <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br />
+            {% endfor %}
+            <input type="submit" value="Answer" />
+            </form>
+            </div>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No feedback is available.</p>
+    {% endif %}
+</div>
 ```
 
 
